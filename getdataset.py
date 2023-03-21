@@ -30,8 +30,9 @@ class MyDataset(data.Dataset):
         # 输入的图像归一化处理
         image = torch.Tensor(self.images[index])
         label = torch.Tensor(self.labels[index])
-        image_mean = torch.sqrt(torch.sum(torch.square(image - torch.mean(image)))/64)
-        image = (image - torch.mean(image))/image_mean
+        image_mean = torch.mean(image)
+        image_sigma = torch.sqrt(torch.sum(torch.square(image - image_mean))/64) 
+        image = (image - image_mean)/image_sigma  
 
         return image, label
     
